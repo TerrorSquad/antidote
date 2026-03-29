@@ -198,7 +198,7 @@ version() {
   local ver="$ANTIDOTE_VERSION"
   local gitsha
   if [[ "$ANTIDOTE_VERSION_SHOW_SHA" == true ]]; then
-    gitsha=$(git_sha --short ${ANTIDOTE_ZSH:h})
+    gitsha=$(command "$ANTIDOTE_GIT_CMD" -C "${ANTIDOTE_ZSH:h}" rev-parse --short HEAD 2>/dev/null) || true
     [[ -z "$gitsha" ]] || ver="$ver ($gitsha)"
   fi
   say "antidote version $ver"
