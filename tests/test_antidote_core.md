@@ -88,6 +88,20 @@ No arg exit status is 2:
 %
 ```
 
+When the antidote install directory is not a git repo (e.g. installed via Homebrew),
+`--version` must not emit any git error and must still print the version string:
+
+```zsh
+% local T_ANTIDOTE_ZSH_SAVE="$ANTIDOTE_ZSH" T_NOGIT_DIR="$(mktemp -d)"
+% ANTIDOTE_ZSH="${T_NOGIT_DIR}/antidote.zsh"
+% ANTIDOTE_VERSION_SHOW_SHA=true
+% antidote --version 2>&1  #=> --regex antidote version [0-9]+\.[0-9]+\.[0-9]+$
+% ANTIDOTE_ZSH="$T_ANTIDOTE_ZSH_SAVE"; unset T_ANTIDOTE_ZSH_SAVE
+% ANTIDOTE_VERSION_SHOW_SHA=false
+% rm -rf "$T_NOGIT_DIR"; unset T_NOGIT_DIR
+%
+```
+
 ## Diagnostics
 
 `--diagnostics` shows system info:
